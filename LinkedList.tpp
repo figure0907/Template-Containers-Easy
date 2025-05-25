@@ -60,5 +60,6 @@ template<typename T>
 inline double LinkedList<T>::get_average() const requires std::is_arithmetic_v<T>
 {
     if (size == 0) { throw std::runtime_error("Can't get average of empty LinkedList"); }
+
     return static_cast<double>(sum) / size;
 }
