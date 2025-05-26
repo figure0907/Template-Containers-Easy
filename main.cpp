@@ -40,20 +40,59 @@ int main() {
     }
     
     // Scan and print integer container contents.
-    Scanner<DynamicArray<int>>::scan(ints_arr, std::cout);
-    Scanner<LinkedList<int>>::scan(ints_list, std::cout);
+    Print<int> int_printer{std::cout};
+    scan_and_apply(ints_arr, int_printer);
+    std::cout << std::endl;
+    scan_and_apply(ints_list, int_printer);
+    std::cout << std::endl;
 
     // Scan and print string container contents.
-    Scanner<DynamicArray<std::string>>::scan(strings_arr, std::cout);
-    Scanner<LinkedList<std::string>>::scan(strings_list, std::cout);
+    Print<std::string> str_printer{std::cout};
+    scan_and_apply(strings_arr, str_printer);
+    std::cout << std::endl;
+    scan_and_apply(strings_list, str_printer);
+    std::cout << std::endl;
 
     // Print averages for integer containers.
-    std::cout << ints_arr.get_average() << std::endl;
-    std::cout << ints_list.get_average() << std::endl;
+    // std::cout << ints_arr.get_average() << std::endl;
+    // std::cout << ints_list.get_average() << std::endl;
 
     // Attempting to get string averages is a compilation error.
     // std::cout << strings_arr.get_average() << std::endl;
     // std::cout << strings_list.get_average() << std::endl;
+
+    // Compute and print aggregates using scan_and_apply
+    Sum<int> int_total;
+    Max<int> int_maximum;
+    Min<int> int_minimum;
+
+    scan_and_apply(ints_list, int_total);
+    scan_and_apply(ints_list, int_maximum);
+    scan_and_apply(ints_list, int_minimum);
+
+    std::cout << "Sum of ints: " << int_total.total << "\n";
+    std::cout << "Max of ints: " << int_maximum.value << "\n";
+    std::cout << "Min of ints: " << int_minimum.value << "\n";
+
+    Sum<std::string> str_total;
+    Max<std::string> str_max;
+    Min<std::string> str_min;
+    scan_and_apply(strings_list, str_total);
+    scan_and_apply(strings_list, str_max);
+    scan_and_apply(strings_list, str_min);
+
+    std::cout << "Sum of strings: " << str_total.total << "\n";
+    std::cout << "Max of strings: " << str_max.value << "\n";
+    std::cout << "Min of strings: " << str_min.value << "\n";
+
+    Average<int> int_avg;
+    Average<std::string> str_avg;
+
+    scan_and_apply(ints_list, int_avg);
+    // scan_and_apply(strings_list, str_avg);
+
+    std::cout << "Int avg: " << int_avg.result() << "\n";
+    // std::cout << "Str Avg: " << str_avg.result() << "\n";
 
     return 0;
 }
