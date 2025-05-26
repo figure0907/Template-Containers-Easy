@@ -16,6 +16,12 @@ class DynamicArray {
         const T& operator[](std::size_t idx) const;
         T& operator[](std::size_t idx);
 
+        inline T* begin() { return data; }
+        inline T* end() { return data + size; }
+
+        inline const T* begin() const { return data; }
+        inline const T* end() const { return data + size; }
+
         // Modifier methods
         void push(const T& value);
         T pop();
