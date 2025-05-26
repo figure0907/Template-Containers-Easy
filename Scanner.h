@@ -1,19 +1,68 @@
 #pragma once
 
-#include <ostream>
+#include <cstddef>
+#include <stdexcept>
 
-#include "ScannerConcepts.h"
+// Generic scan function
+template<typename Container, typename Action>
+void scan_and_apply(const Container& container, Action& action) {
+    for (const auto& item : container) {
+        action(item);
+    }
+}
 
-// A generic scanner class that prints container contents to an output stream.
-// Supports indexable and iterable containers using concepts.
-template<typename Container>
-class Scanner {
-    public:
-        // Prints all elements by iteration over indices. Requires operator[] and get_size().
-        static void scan(const Container& container, std::ostream& out) requires Indexable<Container>;
-
-        // Prints all elements by iteration over elements. Requires begin() and end().
-        static void scan(const Container& container, std::ostream& out) requires Iterable<Container>;
+template<typename T>
+struct Print {
+    std::ostream& out;
+    void operator()(const T& value) { out << value << " "; }
 };
 
-#include "Scanner.tpp"
+// Sum action
+template<typename T>
+struct Sum {
+    T total{};
+    void operator()(const T& value) {
+        total += value;
+    }
+};
+
+// Average action
+template<typename T>
+struct Average {
+    T total{};
+    std::size_t count = 0;
+    void operator()(const T& value) {
+        total += value;
+        ++count;
+    }
+    double result() const {
+        if (count == 0) throw std::runtime_error("Empty input");
+        return static_cast<double>(total) / count;
+    }
+};
+
+template<typename T>
+struct Max {
+    T value;
+    bool initialized = false;
+
+    void operator()(const T& item) {
+        if (!initialized || item > value) {
+            value = item;
+            initialized = true;
+        }
+    }
+};
+
+template<typename T>
+struct Min {
+    T value;
+    bool initialized = false;
+
+    void operator()(const T& item) {
+        if (!initialized || item < value) {
+            value = item;
+            initialized = true;
+        }
+    }
+};
