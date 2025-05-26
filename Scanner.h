@@ -3,6 +3,8 @@
 #include <cstddef>
 #include <stdexcept>
 
+#include "ScannerConcepts.h"
+
 // Applies a given action to each element in the container.
 // The container must support iteration via begin() and end(),
 // either directly or through a wrapper created by make_iterable_wrapper().
@@ -35,6 +37,7 @@ struct Print {
 
 // Sum action
 template<typename T>
+    requires Addable<T>
 struct Sum {
     using element_type = T;
 
@@ -44,6 +47,7 @@ struct Sum {
 
 // Average action
 template<typename T>
+    requires Addable<T> && Divisible<T>
 struct Average {
     using element_type = T;
 
@@ -61,6 +65,7 @@ struct Average {
 
 // Max action
 template<typename T>
+    requires LessThanComparable<T>
 struct Max {
     using element_type = T;
 
@@ -77,6 +82,7 @@ struct Max {
 
 // Min action
 template<typename T>
+    requires LessThanComparable<T>
 struct Min {
     using element_type = T;
 
