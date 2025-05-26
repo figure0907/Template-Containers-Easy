@@ -123,7 +123,7 @@ int main() {
 
     std::vector<int> int_vector;
     for (int i = 1; i <= 150; ++i) {
-        int_vector.push_back((i * i - 1) % 100);
+        int_vector.push_back((i * i) % 121);
     }
     for (int i = 1; i <= 135; ++i) {
         int_vector.pop_back();
@@ -136,16 +136,16 @@ int main() {
     Max<int> int_vec_maximum;
     Min<int> int_vec_minimum;
 
-    scan_and_apply(wrapped_ints_arr, int_vec_total);
-    scan_and_apply(wrapped_ints_arr, int_vec_maximum);
-    scan_and_apply(wrapped_ints_arr, int_vec_minimum);
+    scan_and_apply(int_vector, int_vec_total);
+    scan_and_apply(int_vector, int_vec_maximum);
+    scan_and_apply(int_vector, int_vec_minimum);
 
     std::cout << "Sum of ints: " << int_vec_total.total << "\n";
     std::cout << "Max of ints: " << int_vec_maximum.value << "\n";
     std::cout << "Min of ints: " << int_vec_minimum.value << "\n";
 
     Average<int> int_vec_avg;
-    scan_and_apply(wrapped_ints_arr, int_vec_avg);
+    scan_and_apply(int_vector, int_vec_avg);
     std::cout << "Int avg: " << int_vec_avg.result() << "\n";
 
     return 0;
