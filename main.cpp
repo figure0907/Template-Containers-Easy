@@ -86,12 +86,11 @@ int main() {
     std::cout << "Min of strings: " << str_min.value << "\n";
 
     Average<int> int_avg;
-    Average<std::string> str_avg;
-
     scan_and_apply(ints_list, int_avg);
-    // scan_and_apply(strings_list, str_avg);
-
     std::cout << "Int avg: " << int_avg.result() << "\n";
+
+    // Average<std::string> str_avg;
+    // scan_and_apply(strings_list, str_avg);
     // std::cout << "Str Avg: " << str_avg.result() << "\n";
 
     return 0;
