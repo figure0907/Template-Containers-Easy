@@ -7,9 +7,12 @@
 // Uses standard begin()/end() to delegate to the generic implementation.
 template<typename Container, typename Action>
 void scan_and_apply(const Container& container, Action&& action) {
-    scan_and_apply_custom(container, std::forward<Action>(action),
-                          [](const auto& c) { return c.begin(); },
-                          [](const auto& c) { return c.end(); });
+    scan_and_apply_custom(
+        container,
+        std::forward<Action>(action),
+        [](const auto& c) { return c.begin(); },
+        [](const auto& c) { return c.end(); }
+    );
 }
 
 // Iteration is controlled by user-provided begin()/end() functions.
