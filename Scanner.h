@@ -20,6 +20,9 @@ void scan_and_apply_custom(const Container& container, Action&& action, BeginFn 
     }
 }
 
+// Action structs define what to do with each element during a scan.
+// Each action must support operator()(const T&) to handle one element.
+
 // Print action
 template<typename T>
 struct Print {
