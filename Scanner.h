@@ -7,6 +7,13 @@
 // Assumes the container supports begin() and end().
 template<typename Container, typename Action>
 void scan_and_apply(const Container& container, Action&& action) {
+    using T = typename Container::value_type;
+    static_assert(
+        std::is_same_v<T, 
+        typename std::remove_reference_t<Action>::element_type>,
+        "Mismatch: Action does not match container element type"
+    );
+
     using std::begin;
     using std::end;
     for (auto it = begin(container); it != end(container); ++it) {
@@ -20,6 +27,8 @@ void scan_and_apply(const Container& container, Action&& action) {
 // Print action
 template<typename T>
 struct Print {
+    using element_type = T;
+    
     std::ostream& out;
     void operator()(const T& value) { out << value << " "; }
 };
@@ -27,15 +36,17 @@ struct Print {
 // Sum action
 template<typename T>
 struct Sum {
+    using element_type = T;
+
     T total{};
-    void operator()(const T& value) {
-        total += value;
-    }
+    void operator()(const T& value) { total += value; }
 };
 
 // Average action
 template<typename T>
 struct Average {
+    using element_type = T;
+
     T total{};
     std::size_t count = 0;
     void operator()(const T& value) {
@@ -51,6 +62,8 @@ struct Average {
 // Max action
 template<typename T>
 struct Max {
+    using element_type = T;
+
     T value;
     bool initialized = false;
 
@@ -65,6 +78,8 @@ struct Max {
 // Min action
 template<typename T>
 struct Min {
+    using element_type = T;
+
     T value;
     bool initialized = false;
 
