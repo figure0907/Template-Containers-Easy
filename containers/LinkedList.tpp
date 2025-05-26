@@ -40,16 +40,18 @@ T LinkedList<T>::pop() {
         delete node;
         head = tail = nullptr;
     } else {
-        Iterator it = begin();
-        while (it.current->next != tail) { ++it; }
+        Node* prev = head;
+        while (prev->next != tail) {
+            prev = prev->next;
+        }
 
-        it.current->next = nullptr;
-        tail = it.current;
+        prev->next = nullptr;
+        tail = prev;
         delete node;
     }
 
     --size;
-    
+
     if constexpr (std::is_arithmetic_v<T>) { sum -= value; }
 
     return value;

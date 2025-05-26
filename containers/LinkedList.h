@@ -9,7 +9,6 @@ class LinkedList {
     public:
         using value_type = T;
 
-    private:
         // Internal node struct holding a value and pointer to the next element
         struct Node {
             T value;                    // Stored element
@@ -19,7 +18,6 @@ class LinkedList {
             Node(const T& val, Node* nxt = nullptr) : value(val), next(nxt) {}
         };
 
-    public:
         // Constructor and destructor
         inline LinkedList() : sum(), head(nullptr), tail(nullptr), size(0) {};
         ~LinkedList();
@@ -32,31 +30,13 @@ class LinkedList {
         void push(const T& value);
         T pop();
 
+        // Accesssor methods
+        inline const Node* get_internal_head() const { return head; }
+        
         // Query methods
         inline std::size_t get_size() const { return size; };
         inline T get_sum() const requires std::is_arithmetic_v<T> { return sum; };
         inline double get_average() const requires std::is_arithmetic_v<T>;
-
-        // Iterator methods
-        class Iterator {
-            // Grant access to LinkedList internals
-            friend class LinkedList<T>;
-
-            public:
-                // Iterator constructor
-                inline Iterator(Node* node) : current(node) {}
-
-                // Element access, traversal, and comparison
-                inline const T& operator*() const { return current->value; };
-                inline Iterator& operator++() { current = current->next; return *this; }
-                inline bool operator!=(const Iterator& other) const { return current != other.current; };
-
-            private:
-                Node* current;          // Pointer to current node in iteration
-        };
-        // Iterator-based for loop support
-        inline Iterator begin() const { return Iterator(head); };
-        inline Iterator end() const { return Iterator(nullptr); };
 
     private:
         T sum{};                        // Running sum for arithmetic types
