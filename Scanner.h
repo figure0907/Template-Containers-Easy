@@ -3,11 +3,20 @@
 #include <cstddef>
 #include <stdexcept>
 
-// Generic scan function
+// Default scan function for iterable containers.
+// Uses standard begin()/end() to delegate to the generic implementation.
 template<typename Container, typename Action>
-void scan_and_apply(const Container& container, Action& action) {
-    for (const auto& item : container) {
-        action(item);
+void scan_and_apply(const Container& container, Action&& action) {
+    scan_and_apply_custom(container, std::forward<Action>(action),
+                          [](const auto& c) { return c.begin(); },
+                          [](const auto& c) { return c.end(); });
+}
+
+// Iteration is controlled by user-provided begin()/end() functions.
+template<typename Container, typename Action, typename BeginFn, typename EndFn>
+void scan_and_apply_custom(const Container& container, Action&& action, BeginFn begin_fn, EndFn end_fn) {
+    for (auto it = begin_fn(container); it != end_fn(container); ++it) {
+        action(*it);
     }
 }
 
