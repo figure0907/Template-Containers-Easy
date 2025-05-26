@@ -91,7 +91,7 @@ int main() {
 
     // Average<std::string> str_avg;
     // scan_and_apply(strings_list, str_avg);
-    // std::cout << "Str Avg: " << str_avg.result() << "\n";
+    // std::cout << "Str Avg: " << str_avg.result() << "\n"; // This line won't compile!
 
     return 0;
 }
