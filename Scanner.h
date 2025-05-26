@@ -3,8 +3,9 @@
 #include <cstddef>
 #include <stdexcept>
 
-// Default scan function for iterable containers.
-// Assumes the container supports begin() and end().
+// Applies a given action to each element in the container.
+// The container must support iteration via begin() and end(),
+// either directly or through a wrapper created by make_iterable_wrapper().
 template<typename Container, typename Action>
 void scan_and_apply(const Container& container, Action&& action) {
     using T = typename Container::value_type;
