@@ -10,8 +10,7 @@ template<typename Container, typename Action>
 void scan_and_apply(const Container& container, Action&& action) {
     using T = typename Container::value_type;
     static_assert(
-        std::is_same_v<T, 
-        typename std::remove_reference_t<Action>::element_type>,
+        std::is_same_v<T, typename std::remove_reference_t<Action>::element_type>,
         "Mismatch: Action does not match container element type"
     );
 
