@@ -77,7 +77,7 @@ int main() {
     Sum<std::string> str_total;
     Max<std::string> str_max;
     Min<std::string> str_min;
-    scan_and_apply(strings_list, str_total);
+    scan_and_apply(strings_list, str_total); // This will work fine using concatenation.
     scan_and_apply(strings_list, str_max);
     scan_and_apply(strings_list, str_min);
 
