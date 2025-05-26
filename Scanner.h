@@ -11,6 +11,7 @@ void scan_and_apply(const Container& container, Action& action) {
     }
 }
 
+// Print action
 template<typename T>
 struct Print {
     std::ostream& out;
@@ -41,6 +42,7 @@ struct Average {
     }
 };
 
+// Max action
 template<typename T>
 struct Max {
     T value;
@@ -54,6 +56,7 @@ struct Max {
     }
 };
 
+// Min action
 template<typename T>
 struct Min {
     T value;
