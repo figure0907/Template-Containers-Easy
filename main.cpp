@@ -10,7 +10,7 @@ int main() {
     // Fill and trim DynamicArray and LinkedList of ints.
     DynamicArray<int> ints_arr;
     for (int i = 1; i <= 150; ++i) {
-        ints_arr.push((i * i - 1) % 100);
+        ints_arr.push((i * i) % 121);
     }
     for (int i = 1; i <= 135; ++i) {
         ints_arr.pop();
@@ -18,7 +18,7 @@ int main() {
 
     LinkedList<int> ints_list;
     for (int i = 1; i <= 150; ++i) {
-        ints_list.push((i * i - 1) % 100);
+        ints_list.push((i * i) % 121);
     }
     for (int i = 1; i <= 135; ++i) {
         ints_list.pop();
@@ -27,7 +27,7 @@ int main() {
     // Fill and trim DynamicArray and LinkedList of strings.
     DynamicArray<std::string> strings_arr;
     for (int i = 1; i <= 75; ++i) {
-        strings_arr.push(std::string(1, 'a' + (i * i - 1) % 100));
+        strings_arr.push(std::string(1, 'a' + (i * i) % 121));
     }
     for (int i = 1; i <= 50; ++i) {
         strings_arr.pop();
@@ -35,7 +35,7 @@ int main() {
 
     LinkedList<std::string> strings_list;
     for (int i = 1; i <= 75; ++i) {
-        strings_list.push(std::string(1, 'a' + (i * i - 1) % 100));
+        strings_list.push(std::string(1, 'a' + (i * i) % 121));
     }
     for (int i = 1; i <= 50; ++i) {
         strings_list.pop();
@@ -61,6 +61,8 @@ int main() {
     scan_and_apply(wrapped_str_list, str_printer);
     std::cout << std::endl;
 
+    ////////////////////////////////////////////////////
+
     // Compute and print aggregates using scan_and_apply
     Sum<int> int_total;
     Max<int> int_maximum;
@@ -74,6 +76,12 @@ int main() {
     std::cout << "Max of ints: " << int_maximum.value << "\n";
     std::cout << "Min of ints: " << int_minimum.value << "\n";
 
+    Average<int> int_avg;
+    scan_and_apply(wrapped_ints_arr, int_avg);
+    std::cout << "Int avg: " << int_avg.result() << "\n";
+
+    ////////////////////////////////////////////////////
+
     Sum<std::string> str_total;
     Max<std::string> str_max;
     Min<std::string> str_min;
@@ -86,17 +94,15 @@ int main() {
     std::cout << "Max of strings: " << str_max.value << "\n";
     std::cout << "Min of strings: " << str_min.value << "\n";
 
-    Average<int> int_avg;
-    scan_and_apply(wrapped_ints_arr, int_avg);
-    std::cout << "Int avg: " << int_avg.result() << "\n";
-
     // Average<std::string> str_avg;
     // scan_and_apply(wrapped_str_list, str_avg);
     // std::cout << "Str Avg: " << str_avg.result() << "\n"; // This line won't compile!
 
+    ////////////////////////////////////////////////////
+
     LinkedList<float> floats_list;
     for (int i = 1; i <= 10; ++i) {
-        floats_list.push(static_cast<float>(i * i / (i + 7.0)));
+        floats_list.push(static_cast<float>((i * i * i) / (i + 2.3)));
     }
 
     auto wrapped_float_arr = make_iterable_wrapper(floats_list);
@@ -120,6 +126,8 @@ int main() {
     Average<float> float_avg;
     scan_and_apply(wrapped_float_arr, float_avg);
     std::cout << "Float avg: " << float_avg.result() << "\n";
+
+    ////////////////////////////////////////////////////
 
     std::vector<int> int_vector;
     for (int i = 1; i <= 150; ++i) {
