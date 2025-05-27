@@ -9,6 +9,7 @@ class LinkedList {
     public:
         using value_type = T;
 
+    private:
         // Internal node struct holding a value and pointer to the next element
         struct Node {
             T value;                    // Stored element
@@ -18,6 +19,7 @@ class LinkedList {
             Node(const T& val, Node* nxt = nullptr) : value(val), next(nxt) {}
         };
 
+    public:
         // Constructor and destructor
         inline LinkedList() : sum(), head(nullptr), tail(nullptr), size(0) {};
         ~LinkedList();
