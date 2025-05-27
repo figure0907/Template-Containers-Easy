@@ -4,21 +4,36 @@
 #include "IterableWrapper.h"
 
 template<typename T>
-auto make_linked_list_wrapper(const LinkedList<T>& list) {
-    using Node = typename LinkedList<T>::Node;
+struct LinkedListNodeProxy {
+    T value;
+    const LinkedListNodeProxy* next;
+};
 
-    struct Iterator {
-        const Node* current;
+template<typename T>
+class LinkedListIterator {
+    public:
+        using Proxy = LinkedListNodeProxy<T>;
 
-        Iterator(const Node* node) : current(node) {}
+        const Proxy* current;
+
+        LinkedListIterator(const void* raw_node_ptr)
+            : current(reinterpret_cast<const Proxy*>(raw_node_ptr)) {}
+
         const T& operator*() const { return current->value; }
-        Iterator& operator++() { current = current->next; return *this; }
-        bool operator!=(const Iterator& other) const { return current != other.current; }
-    };
 
-    auto begin_fn = [](const LinkedList<T>& l) -> Iterator { return Iterator(static_cast<const Node*>(l.get_internal_head())); };
+        LinkedListIterator& operator++() {
+            current = current->next;
+            return *this;
+        }
 
-    auto end_fn = [](const LinkedList<T>&) -> Iterator { return Iterator(nullptr); };
+        bool operator!=(const LinkedListIterator& other) const { return current != other.current; }
+};
 
-    return make_iterable_wrapper(list, begin_fn, end_fn);
+template<typename T>
+auto make_iterable_wrapper(const LinkedList<T>& list) {
+    return make_iterable_wrapper(
+        list,
+        [](const auto& l) { return LinkedListIterator<T>(l.get_internal_head()); },
+        [](const auto&) { return LinkedListIterator<T>(nullptr); }
+    );
 }
